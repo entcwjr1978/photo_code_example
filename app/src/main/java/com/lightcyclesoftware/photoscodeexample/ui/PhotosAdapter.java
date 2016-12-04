@@ -16,7 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder> {
-
+    private static final String IMAGE_SIZE = "medium";
     private List<DataModel.Record> mRecordList;
 
     public PhotosAdapter(List<DataModel.Record> recordList) {
@@ -61,7 +61,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
 
     private String getMedium2xUrl(DataModel.Record record) {
         for (DataModel.Url url: record.getUrls()) {
-            if (url.getSize_code().contains("medium")) {
+            if (url.getSize_code().contains(IMAGE_SIZE)) {
                 return url.getUrl();
             }
         }
