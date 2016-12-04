@@ -4,10 +4,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import com.github.pwittchen.infinitescroll.library.Preconditions;
 
+import static com.lightcyclesoftware.photoscodeexample.MainActivity.RECORDS_PER_QUERY;
+
 
 public abstract class PhotoInfiniteScrollListener extends RecyclerView.OnScrollListener {
     private final int maxItemsPerRequest;
+    private final float loadingPoint;
     private final LinearLayoutManager layoutManager;
+
 
     /**
      * Initializes InfiniteScrollListener, which can be added
@@ -16,10 +20,11 @@ public abstract class PhotoInfiniteScrollListener extends RecyclerView.OnScrollL
      * @param maxItemsPerRequest Max items to be loaded in a single request.
      * @param layoutManager LinearLayoutManager created in the Activity.
      */
-    public PhotoInfiniteScrollListener(int maxItemsPerRequest, LinearLayoutManager layoutManager) {
+    public PhotoInfiniteScrollListener(int maxItemsPerRequest, float loadingPoint, LinearLayoutManager layoutManager) {
         Preconditions.checkIfPositive(maxItemsPerRequest, "maxItemsPerRequest <= 0");
         Preconditions.checkNotNull(layoutManager, "layoutManager == null");
         this.maxItemsPerRequest = maxItemsPerRequest;
+        this.loadingPoint = loadingPoint;
         this.layoutManager = layoutManager;
     }
 
@@ -32,7 +37,7 @@ public abstract class PhotoInfiniteScrollListener extends RecyclerView.OnScrollL
      */
     @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
-        if (canLoadMoreItems()) {
+        if (canLoadMoreItems() && dy > 0) {
             onScrolledToEnd(layoutManager.findFirstVisibleItemPosition());
         }
     }
@@ -60,8 +65,8 @@ public abstract class PhotoInfiniteScrollListener extends RecyclerView.OnScrollL
         final int visibleItemsCount = layoutManager.getChildCount();
         final int totalItemsCount = layoutManager.getItemCount();
         final int pastVisibleItemsCount = layoutManager.findFirstVisibleItemPosition();
-        final boolean lastItemShown = visibleItemsCount + pastVisibleItemsCount >= totalItemsCount*0.75;
-        return lastItemShown && totalItemsCount*0.75 >= maxItemsPerRequest*0.75;
+        final boolean lastItemShown = visibleItemsCount + pastVisibleItemsCount >= totalItemsCount - (loadingPoint * maxItemsPerRequest);
+        return lastItemShown && totalItemsCount >= maxItemsPerRequest;
     }
 
     /**

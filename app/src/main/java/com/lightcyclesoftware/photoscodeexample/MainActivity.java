@@ -20,10 +20,12 @@ import rx.schedulers.Schedulers;
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
     public static final int RECORDS_PER_QUERY = 48;
+    public static final float LOADING_POINT = 0.36f;
     private List<DataModel.Record> recordList = new ArrayList<>();
     private PhotosAdapter mAdapter;
     private GridLayoutManager mLayoutManager;
     private int page = 0;
+    private boolean lastPageLoaded;
     private PhotoInfiniteScrollListener mInfiniteScrollListener;
     private boolean hasScrolled;
 
@@ -57,9 +59,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private PhotoInfiniteScrollListener createInfiniteScrollListener() {
-        return new PhotoInfiniteScrollListener((int)(RECORDS_PER_QUERY), mLayoutManager) {
+        return new PhotoInfiniteScrollListener(RECORDS_PER_QUERY, LOADING_POINT, mLayoutManager) {
             @Override public void onScrolledToEnd(final int firstVisibleItemPosition) {
-                if (!hasScrolled) {
+                if (!hasScrolled && !lastPageLoaded) {
                     try {
                         hasScrolled = true;
                         mScrollingAVLoadingIndicatorView.setVisibility(View.VISIBLE);
@@ -86,14 +88,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onPhotosNext(DataModel dataModel){
-        recordList.addAll(dataModel.getData()
+        if (dataModel.getData()
                 .getAlbum()
                 .getPhotos()
-                .getRecords());
+                .getRecords().size() == 0) {
+            lastPageLoaded = true;
+        } else {
+            recordList.addAll(dataModel.getData()
+                    .getAlbum()
+                    .getPhotos()
+                    .getRecords());
+        }
     }
 
     private void onPhotosFailure(@NonNull Throwable thowable) {
         System.out.println(thowable.getMessage());
+        hasScrolled = false;
+        mScrollingAVLoadingIndicatorView.setVisibility(View.GONE);
+        mAVLoadingIndicatorView.setVisibility(View.GONE);
     }
 
     private void onPhotosSuccess(){

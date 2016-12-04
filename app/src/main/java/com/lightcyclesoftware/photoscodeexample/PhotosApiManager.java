@@ -36,7 +36,7 @@ public class PhotosApiManager {
     public  Observable<String> getCookie(Context context) {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         ReceivedCookiesInterceptor cookiesInterceptor = new ReceivedCookiesInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(logging);
         httpClient.cookieJar(new CookieJar() {
@@ -47,7 +47,7 @@ public class PhotosApiManager {
             cookieStore.put(url, cookies);
             String savedCookie = ((Cookie)((List)cookieStore.get(url)).get(0)).name() + "=" + ((Cookie)((List)cookieStore.get(url)).get(0)).value();
             Log.d(TAG, savedCookie);
-            ((Activity)context).getPreferences(Context.MODE_PRIVATE).edit().putString("WALDO_COOKIE", savedCookie)
+            ((Activity)context).getPreferences(Context.MODE_PRIVATE).edit().putString(context.getString(R.string.cookie_pref), savedCookie)
             .commit();
         }
 
@@ -59,7 +59,7 @@ public class PhotosApiManager {
     });
         httpClient.addInterceptor(cookiesInterceptor);
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://auth.staging.waldo.photos")
+                .baseUrl(context.getString(R.string.get_cookie_endpoint))
                 .addConverterFactory(SimpleXmlConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .client(httpClient.build())
@@ -69,6 +69,8 @@ public class PhotosApiManager {
 
     public Observable<DataModel> getPhotos(Context context, int page) throws UnsupportedEncodingException {
         GraphQLBody graphQLBody = new GraphQLBody();
+
+        //TODO:  Create or find a builder to create this
         graphQLBody.setQuery("query {\n" +
                 "  album(id: \"YWxidW06YTQwYzc5ODEtMzE1Zi00MWIyLTk5NjktMTI5NjIyZDAzNjA5\") {\n" +
                 "    id\n" +
@@ -90,7 +92,7 @@ public class PhotosApiManager {
                 "}");
 
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(logging);
         httpClient.connectTimeout(5, TimeUnit.MINUTES);
@@ -100,9 +102,10 @@ public class PhotosApiManager {
                             @Override
                             public Response intercept(Interceptor.Chain chain) throws IOException {
                                 Request original = chain.request();
-                                String cookie = ((Activity)context).getPreferences(Context.MODE_PRIVATE).getString("WALDO_COOKIE", null);
+                                String cookie = ((Activity)context).getPreferences(Context.MODE_PRIVATE).getString(context.getString(R.string.cookie_pref), null);
                                 Request request = original.newBuilder()
                                         .header("Cookie", cookie)
+                                        .header("Accept-Encoding", "gzip, deflate, br")
                                         .method(original.method(), original.body())
                                         .build();
 
@@ -110,7 +113,7 @@ public class PhotosApiManager {
                             }
                         });
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://core-graphql.staging.waldo.photos")
+                .baseUrl(context.getString(R.string.get_photos_endpoint))
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .client(httpClient.build())
