@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
+import static org.mockito.Matchers.isNotNull;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -74,30 +75,64 @@ public class PhotoUnitTest {
         photosApiManager.getPhotos(activity, 0)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
+                .toBlocking()
+                .subscribe(this::onPhotosEmptyNext
+                        , this::onPhotosEmptyFailure
+                        , this::onPhotosEmptySuccess);
+    }
+
+    @Test
+    public void valid_photo_list() throws Exception {
+        // Mocks
+        DataModel dataModel = setupDataModel();
+        when(photosApiManager.getPhotos(activity, 0)).thenReturn(Observable.just(dataModel));
+
+        //assert
+        photosApiManager.getPhotos(activity, 0)
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .toBlocking()
                 .subscribe(this::onPhotosNext
                         , this::onPhotosFailure
                         , this::onPhotosSuccess);
     }
 
     @Test
-    public void valid_photo_list() throws Exception {
-
-    }
-
-    @Test
     public void photo_list_with_error() throws Exception {
+        // Mocks
+        when(photosApiManager.getPhotos(activity, 0)).thenReturn(Observable.error(new Error()));
 
+        //assert
+        photosApiManager.getPhotos(activity, 0)
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .toBlocking()
+                .subscribe(this::onPhotosNext
+                        , this::onPhotosFailure
+                        , this::onPhotosSuccess);
     }
 
     private void onPhotosNext(DataModel dataModel){
-        assert(dataModel.getData().getAlbum().getPhotos().getRecords().size() == 0);
+        assert(dataModel.getData().getAlbum().getPhotos().getRecords().size() > 0);
     }
 
-    private void onPhotosFailure(@NonNull Throwable thowable) {
-        System.out.println(thowable.getMessage());
+    private void onPhotosFailure(@NonNull Throwable throwable) {
+        assert(throwable != null);
     }
 
     private void onPhotosSuccess(){
+
+    }
+
+    private void onPhotosEmptyNext(DataModel dataModel){
+        assert(dataModel.getData().getAlbum().getPhotos().getRecords().size() == 0);
+    }
+
+    private void onPhotosEmptyFailure(@NonNull Throwable thowable) {
+
+    }
+
+    private void onPhotosEmptySuccess(){
 
     }
 
@@ -107,6 +142,20 @@ public class PhotoUnitTest {
         DataModel.Album album  = new DataModel().new Album();
         DataModel.Photos photos = new DataModel().new Photos();
         photos.setRecords(new ArrayList<>());
+        album.setPhotos(photos);
+        data.setAlbum(album);
+        dataModel.setData(data);
+        return dataModel;
+    }
+
+    private DataModel setupDataModel() {
+        DataModel dataModel = new DataModel();
+        DataModel.Data data = new DataModel().new Data();
+        DataModel.Album album  = new DataModel().new Album();
+        DataModel.Photos photos = new DataModel().new Photos();
+        DataModel.Record record = new DataModel().new Record();
+        photos.setRecords(new ArrayList<>());
+        photos.getRecords().add(record);
         album.setPhotos(photos);
         data.setAlbum(album);
         dataModel.setData(data);
