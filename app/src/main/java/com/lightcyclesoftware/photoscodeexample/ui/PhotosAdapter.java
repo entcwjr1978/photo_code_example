@@ -1,4 +1,4 @@
-package com.lightcyclesoftware.photoscodeexample;
+package com.lightcyclesoftware.photoscodeexample.ui;
 
 
 import android.net.Uri;
@@ -8,6 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.lightcyclesoftware.photoscodeexample.R;
+import com.lightcyclesoftware.photoscodeexample.model.DataModel;
+
 import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -1,4 +1,4 @@
-package com.lightcyclesoftware.photoscodeexample;
+package com.lightcyclesoftware.photoscodeexample.activity;
 
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -7,7 +7,12 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import com.github.pwittchen.infinitescroll.library.InfiniteScrollListener;
+
+import com.lightcyclesoftware.photoscodeexample.ui.PhotoInfiniteScrollListener;
+import com.lightcyclesoftware.photoscodeexample.ui.PhotosAdapter;
+import com.lightcyclesoftware.photoscodeexample.R;
+import com.lightcyclesoftware.photoscodeexample.model.DataModel;
+import com.lightcyclesoftware.photoscodeexample.service.PhotosApiManager;
 import com.wang.avi.AVLoadingIndicatorView;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;

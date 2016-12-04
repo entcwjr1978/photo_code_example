@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.lightcyclesoftware.waldophotoscodeexample.com.lightcyclesoftware.photoscodeexample.MainActivity">
+    tools:context="com.lightcyclesoftware.photoscodeexample.activity.MainActivity">
 <android.support.v7.widget.RecyclerView
     android:id="@+id/photo_list"
     android:layout_width="match_parent"
@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:indicatorName="BallPulseIndicator"
-        app:indicatorColor="#FF1D87FA"
+        app:indicatorColor="@color/indicatorColor"
         android:layout_centerInParent="true"
         />
     <com.wang.avi.AVLoadingIndicatorView
@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:indicatorName="BallPulseSyncIndicator"
-        app:indicatorColor="#FF1D87FA"
+        app:indicatorColor="@color/indicatorColor"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:visibility="gone"

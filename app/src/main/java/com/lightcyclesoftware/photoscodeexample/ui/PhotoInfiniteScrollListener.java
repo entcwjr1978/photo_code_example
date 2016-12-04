@@ -1,10 +1,8 @@
-package com.lightcyclesoftware.photoscodeexample;
+package com.lightcyclesoftware.photoscodeexample.ui;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import com.github.pwittchen.infinitescroll.library.Preconditions;
-
-import static com.lightcyclesoftware.photoscodeexample.MainActivity.RECORDS_PER_QUERY;
 
 
 public abstract class PhotoInfiniteScrollListener extends RecyclerView.OnScrollListener {

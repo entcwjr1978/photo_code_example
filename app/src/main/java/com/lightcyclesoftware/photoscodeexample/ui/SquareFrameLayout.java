@@ -1,4 +1,4 @@
-package com.lightcyclesoftware.photoscodeexample;
+package com.lightcyclesoftware.photoscodeexample.ui;
 
 
 import android.content.Context;

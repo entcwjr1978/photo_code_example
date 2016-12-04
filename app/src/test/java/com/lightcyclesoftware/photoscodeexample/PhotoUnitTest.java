@@ -4,10 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
-import android.test.AndroidTestCase;
-import android.test.mock.MockContext;
-import android.util.Log;
-import android.view.View;
+
+import com.lightcyclesoftware.photoscodeexample.model.DataModel;
+import com.lightcyclesoftware.photoscodeexample.service.PhotosApiManager;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,14 +15,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 
-import javax.inject.Inject;
-
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-import static com.lightcyclesoftware.photoscodeexample.DataModel.*;
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)

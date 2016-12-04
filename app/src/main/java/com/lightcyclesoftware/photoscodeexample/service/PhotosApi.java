@@ -1,4 +1,7 @@
-package com.lightcyclesoftware.photoscodeexample;
+package com.lightcyclesoftware.photoscodeexample.service;
+
+import com.lightcyclesoftware.photoscodeexample.model.DataModel;
+import com.lightcyclesoftware.photoscodeexample.model.GraphQLBody;
 
 import retrofit2.http.Body;
 import retrofit2.http.Field;

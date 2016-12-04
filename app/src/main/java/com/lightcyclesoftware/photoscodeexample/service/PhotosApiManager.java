@@ -1,9 +1,14 @@
-package com.lightcyclesoftware.photoscodeexample;
+package com.lightcyclesoftware.photoscodeexample.service;
 
 
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
+
+import com.lightcyclesoftware.photoscodeexample.model.DataModel;
+import com.lightcyclesoftware.photoscodeexample.model.GraphQLBody;
+import com.lightcyclesoftware.photoscodeexample.R;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -24,7 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 import rx.Observable;
 
-import static com.lightcyclesoftware.photoscodeexample.MainActivity.RECORDS_PER_QUERY;
+import static com.lightcyclesoftware.photoscodeexample.activity.MainActivity.RECORDS_PER_QUERY;
 
 public class PhotosApiManager {
     public static final String TAG = "PhotosApiManager";

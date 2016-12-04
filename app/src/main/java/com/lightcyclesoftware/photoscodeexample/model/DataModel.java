@@ -1,4 +1,4 @@
-package com.lightcyclesoftware.photoscodeexample;
+package com.lightcyclesoftware.photoscodeexample.model;
 
 
 import java.util.List;

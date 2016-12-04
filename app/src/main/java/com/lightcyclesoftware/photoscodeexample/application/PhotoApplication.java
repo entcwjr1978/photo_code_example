@@ -1,4 +1,4 @@
-package com.lightcyclesoftware.photoscodeexample;
+package com.lightcyclesoftware.photoscodeexample.application;
 
 
 import android.app.Application;
