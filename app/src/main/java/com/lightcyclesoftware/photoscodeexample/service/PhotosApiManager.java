@@ -69,7 +69,7 @@ public class PhotosApiManager {
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .client(httpClient.build())
                 .build();
-        return retrofit.create(PhotosApi.class).getCookie("andy", "1234", "/");
+        return retrofit.create(PhotosApi.class).getCookie(context.getString(R.string.username), context.getString(R.string.password), "/");
     }
 
     public Observable<DataModel> getPhotos(Context context, int page) throws UnsupportedEncodingException {

@@ -3,4 +3,6 @@
     <string name="get_photos_endpoint">https://core-graphql.staging.waldo.photos</string>
     <string name="get_cookie_endpoint">https://auth.staging.waldo.photos</string>
     <string name="cookie_pref">WALDO_COOKIE</string>
+    <string name="username">andy</string>
+    <string name="password">1234</string>
 </resources>
