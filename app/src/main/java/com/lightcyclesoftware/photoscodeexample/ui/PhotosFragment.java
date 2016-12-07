@@ -61,8 +61,8 @@ public class PhotosFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        PhotosApiManager.getInstance().getCookie(getActivity()).subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
+        PhotosApiManager.getInstance().getCookie(getActivity()).subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
                 .subscribe(this::onNext
                         ,this::onFailure
                         ,this::onSuccess);
@@ -103,6 +103,7 @@ public class PhotosFragment extends Fragment {
 
     private void onFailure(@NonNull Throwable thowable) {
         System.out.println(thowable.getMessage());
+        mAVLoadingIndicatorView.setVisibility(View.GONE);
     }
 
     private void onPhotosNext(DataModel dataModel){
