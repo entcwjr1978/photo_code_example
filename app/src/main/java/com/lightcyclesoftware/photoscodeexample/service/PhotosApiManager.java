@@ -29,7 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 import rx.Observable;
 
-import static com.lightcyclesoftware.photoscodeexample.activity.MainActivity.RECORDS_PER_QUERY;
+import static com.lightcyclesoftware.photoscodeexample.ui.PhotosFragment.RECORDS_PER_QUERY;
 
 public class PhotosApiManager {
     public static final String TAG = "PhotosApiManager";

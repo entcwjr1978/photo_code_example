@@ -1,4 +1,4 @@
-package com.lightcyclesoftware.waldophotoscodeexample;
+package com.lightcyclesoftware.photoscodeexample;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
