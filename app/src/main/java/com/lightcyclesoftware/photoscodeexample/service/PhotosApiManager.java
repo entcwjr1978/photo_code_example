@@ -77,7 +77,7 @@ public class PhotosApiManager {
 
         //TODO:  Create or find a builder to create this
         graphQLBody.setQuery("query {\n" +
-                "  album(id: \"YWxidW06YTQwYzc5ODEtMzE1Zi00MWIyLTk5NjktMTI5NjIyZDAzNjA5\") {\n" +
+                "  album(id: \"vERTnkSHzxMzgfpo3GCNxV\") {\n" +
                 "    id\n" +
                 "    name\n" +
                 "    photos(slice: { limit:" + RECORDS_PER_QUERY +" offset: " + page * RECORDS_PER_QUERY + " }) {\n" +
