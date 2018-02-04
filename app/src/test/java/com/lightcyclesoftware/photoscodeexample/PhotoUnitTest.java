@@ -5,20 +5,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 
-import com.lightcyclesoftware.photoscodeexample.model.DataModel;
-import com.lightcyclesoftware.photoscodeexample.service.PhotosApiManager;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
 import java.util.ArrayList;
-
 import rx.Observable;
 import rx.schedulers.Schedulers;
-
-import static org.mockito.Matchers.isNotNull;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
