@@ -1,10 +1,12 @@
 package com.lightcyclesoftware.photoscodeexample.ui
 
-import android.app.Fragment
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.transition.TransitionInflater
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -35,7 +37,7 @@ class PhotosFragment: Fragment() {
     private var hasScrolled: Boolean = false
 
     companion object {
-        const val RECORDS_PER_QUERY = 96
+        const val RECORDS_PER_QUERY = 48
     }
 
     lateinit var mRecyclerView: RecyclerView
@@ -50,18 +52,45 @@ class PhotosFragment: Fragment() {
         return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        PhotosApiManager.getCookie(activity as Context).subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
-                .subscribe({ this.onNext() }, { this.onFailure(it) }, { this.onSuccess() })
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        postponeEnterTransition()
+        if (mAdapter == null) {
+            mAdapter = PhotosAdapter(recordList)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val enterTransition = (TransitionInflater.from(context).inflateTransition(android.R.transition.move))
+            sharedElementEnterTransition = enterTransition
+        }
+    }
 
-        mAdapter = PhotosAdapter(recordList)
-        mLayoutManager = GridLayoutManager(activity, 3)
-        mRecyclerView.layoutManager = mLayoutManager
-        mRecyclerView.setHasFixedSize(true)
-        mRecyclerView.adapter = mAdapter
-        mInfiniteScrollListener = createInfiniteScrollListener()
-        mRecyclerView.addOnScrollListener(mInfiniteScrollListener)
+    override fun onResume() {
+        super.onResume()
+        if (recordList.size == 0) {
+            mAVLoadingIndicatorView.visibility = View.VISIBLE
+            PhotosApiManager.getCookie(activity as Context).subscribeOn(Schedulers.io())
+                    .observeOn(Schedulers.io())
+                    .subscribe({ this.onNext() }, { this.onFailure(it) }, { this.onSuccess() })
+        } else {
+            mAVLoadingIndicatorView.visibility = View.GONE
+            startPostponedEnterTransition()
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+           if (mLayoutManager == null) {
+               mLayoutManager = GridLayoutManager(activity, 3)
+               mRecyclerView.layoutManager = mLayoutManager
+               mRecyclerView.setHasFixedSize(true)
+               mRecyclerView.adapter = mAdapter
+               mInfiniteScrollListener = createInfiniteScrollListener()
+               mRecyclerView.addOnScrollListener(mInfiniteScrollListener)
+           } else {
+               mRecyclerView.layoutManager = mLayoutManager
+               mRecyclerView.setHasFixedSize(true)
+               mRecyclerView.adapter = mAdapter
+               mRecyclerView.addOnScrollListener(mInfiniteScrollListener)
+           }
     }
 
     private fun createInfiniteScrollListener(): PhotoInfiniteScrollListener {
@@ -113,6 +142,7 @@ class PhotosFragment: Fragment() {
         mAVLoadingIndicatorView.visibility = View.GONE
         page++
         hasScrolled = false
+        startPostponedEnterTransition()
     }
 
     private fun onSuccess() {

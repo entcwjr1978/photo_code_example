@@ -1,14 +1,19 @@
 package com.lightcyclesoftware.photoscodeexample.ui
 
 import android.net.Uri
+import android.support.v4.view.ViewCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
-import com.facebook.drawee.view.SimpleDraweeView
+import com.bumptech.glide.Glide
 import com.lightcyclesoftware.photoscodeexample.R
+import com.lightcyclesoftware.photoscodeexample.event.Event
 import com.lightcyclesoftware.photoscodeexample.model.Record
+import org.greenrobot.eventbus.EventBus
+import java.util.*
 
 /**
  * Created by Edward on 2/4/2018.
@@ -25,11 +30,20 @@ class PhotosAdapter(recordList: List<Record>) : RecyclerView.Adapter<PhotosAdapt
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.imageIndex!!.text = Integer.toString(position)
+        holder.imageIndex.text = Integer.toString(position)
+        holder.itemView.setOnClickListener(null)
         val record = mRecordList[position]
-        val uri = Uri.parse(getMedium2xUrl(record))
+        val url = getMedium2xUrl(record)
+        val uri = Uri.parse(url)
+        ViewCompat.setTransitionName(holder.itemView, UUID.randomUUID().toString())
+        holder.itemView.setOnClickListener {
+            ViewCompat.setTransitionName(holder.itemView, holder.itemView.resources.getString(R.string.imageTransitionName))
+            EventBus.getDefault().post(Event("ImageClick", hashMapOf("id" to position, "view" to holder.itemView, "url" to url)))
+        }
         val draweeView = holder.image
-        draweeView.setImageURI(uri, null)
+        Glide.with(holder.itemView.context)
+                .load(url)
+                .into(draweeView)
     }
 
     override fun getItemCount(): Int {
@@ -37,7 +51,7 @@ class PhotosAdapter(recordList: List<Record>) : RecyclerView.Adapter<PhotosAdapt
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var image = view.findViewById<SimpleDraweeView>(R.id.image)
+        var image = view.findViewById<ImageView>(R.id.image)
         var imageIndex = view.findViewById<TextView>(R.id.image_index)
     }
 
