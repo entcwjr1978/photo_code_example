@@ -1,8 +1,13 @@
 package com.lightcyclesoftware.photoscodeexample.ui
 
 import android.net.Uri
+<<<<<<< HEAD
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
+=======
+import android.support.v4.view.ViewCompat
+import android.support.v7.widget.RecyclerView
+>>>>>>> 0829545893dfa9db91b1bcdc4a842ef506a9d179
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

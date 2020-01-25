@@ -1,7 +1,14 @@
 package com.lightcyclesoftware.photoscodeexample.ui
 
+<<<<<<< HEAD
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+=======
+import android.os.Build
+import android.os.Bundle
+import android.support.v4.app.Fragment
+import android.transition.TransitionInflater
+>>>>>>> 0829545893dfa9db91b1bcdc4a842ef506a9d179
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +23,7 @@ import androidx.palette.graphics.Palette
 import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
+
 
 
 class ImageFragment: Fragment() {
@@ -56,7 +64,6 @@ class ImageFragment: Fragment() {
                 .transition((BitmapTransitionOptions.withCrossFade()))
                 .load(url)
                 .into(target)
-
     }
 
     private val target = object : SimpleTarget<Bitmap>() {

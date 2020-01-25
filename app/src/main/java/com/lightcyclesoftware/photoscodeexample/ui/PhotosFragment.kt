@@ -3,9 +3,15 @@ package com.lightcyclesoftware.photoscodeexample.ui
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+<<<<<<< HEAD
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+=======
+import android.support.v4.app.Fragment
+import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.RecyclerView
+>>>>>>> 0829545893dfa9db91b1bcdc4a842ef506a9d179
 import android.transition.TransitionInflater
 import android.util.Log
 import android.view.LayoutInflater
@@ -30,6 +36,10 @@ class PhotosFragment: Fragment() {
     val LOADING_POINT = 0.5f
     private val recordList = ArrayList<Record>()
     private var mAdapter: PhotosAdapter? = null
+<<<<<<< HEAD
+=======
+    private var mLayoutManager: GridLayoutManager? = null
+>>>>>>> 0829545893dfa9db91b1bcdc4a842ef506a9d179
     private var page = 0
     private var lastPageLoaded: Boolean = false
     private var mInfiniteScrollListener: PhotoInfiniteScrollListener? = null
@@ -77,6 +87,7 @@ class PhotosFragment: Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+<<<<<<< HEAD
            if (mRecyclerView.layoutManager == null) {
                mRecyclerView.layoutManager = GridLayoutManager(activity, 3)
                mRecyclerView.setHasFixedSize(true)
@@ -88,11 +99,29 @@ class PhotosFragment: Fragment() {
                mRecyclerView.setHasFixedSize(true)
                mRecyclerView.adapter = mAdapter
                mInfiniteScrollListener?.let { mRecyclerView.addOnScrollListener(it) }
+=======
+           if (mLayoutManager == null) {
+               mLayoutManager = GridLayoutManager(activity, 3)
+               mRecyclerView.layoutManager = mLayoutManager
+               mRecyclerView.setHasFixedSize(true)
+               mRecyclerView.adapter = mAdapter
+               mInfiniteScrollListener = createInfiniteScrollListener()
+               mRecyclerView.addOnScrollListener(mInfiniteScrollListener)
+           } else {
+               mRecyclerView.layoutManager = mLayoutManager
+               mRecyclerView.setHasFixedSize(true)
+               mRecyclerView.adapter = mAdapter
+               mRecyclerView.addOnScrollListener(mInfiniteScrollListener)
+>>>>>>> 0829545893dfa9db91b1bcdc4a842ef506a9d179
            }
     }
 
     private fun createInfiniteScrollListener(): PhotoInfiniteScrollListener {
+<<<<<<< HEAD
         return object : PhotoInfiniteScrollListener(RECORDS_PER_QUERY, LOADING_POINT, mRecyclerView.layoutManager as GridLayoutManager) {
+=======
+        return object : PhotoInfiniteScrollListener(RECORDS_PER_QUERY, LOADING_POINT, mLayoutManager as GridLayoutManager) {
+>>>>>>> 0829545893dfa9db91b1bcdc4a842ef506a9d179
             override fun onScrolledToEnd(firstVisibleItemPosition: Int) {
                 if (!hasScrolled && !lastPageLoaded) {
                     try {

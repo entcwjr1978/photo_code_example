@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+=======
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+>>>>>>> 0829545893dfa9db91b1bcdc4a842ef506a9d179
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/percentRelativeLayout"
     android:layout_width="match_parent"
@@ -12,4 +16,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+<<<<<<< HEAD
 </androidx.constraintlayout.widget.ConstraintLayout>
+=======
+</android.support.constraint.ConstraintLayout>
+>>>>>>> 0829545893dfa9db91b1bcdc4a842ef506a9d179

@@ -3,7 +3,11 @@ package com.lightcyclesoftware.photoscodeexample;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+<<<<<<< HEAD
 import androidx.annotation.NonNull;
+=======
+import android.support.annotation.NonNull;
+>>>>>>> 0829545893dfa9db91b1bcdc4a842ef506a9d179
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -25,6 +25,7 @@ abstract class PhotoInfiniteScrollListener
      * @param dy The amount of vertical scroll.
      */
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+
         super.onScrolled(recyclerView, dx, dy)
         if (canLoadMoreItems() && dy > 0) {
             onScrolledToEnd(layoutManager.findFirstVisibleItemPosition())

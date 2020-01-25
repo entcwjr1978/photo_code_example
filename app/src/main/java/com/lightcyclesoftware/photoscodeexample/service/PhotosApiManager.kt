@@ -94,7 +94,7 @@ object PhotosApiManager {
             val cookie = (context as Activity).getPreferences(Context.MODE_PRIVATE).getString(context.getString(R.string.cookie_pref), null)
             val request = original.newBuilder()
                     .header("Cookie", cookie!!)
-
+                    .header("Accept-Encoding", "gzip, deflate, br")
                     .method(original.method(), original.body())
                     .build()
 
